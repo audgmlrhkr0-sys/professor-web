@@ -1,191 +1,53 @@
 /* ============================================================
    ARTIST WEBSITE — script.js
+   작품 데이터는 artwork-manager에서 관리합니다.
+   두 파일을 같은 브라우저에서 열면 자동으로 연동됩니다.
    ============================================================ */
 
-/* ===== EXHIBITION DATA =====
-   이미지 교체 방법:
-   - images 배열의 각 객체에 src 속성 추가: src: 'images/exhibition-1/view1.jpg'
-   - gradient는 src 이미지가 없을 때 placeholder로 표시됨
-   ============================*/
-const exhibitions = [
-  {
-    id: 1,
-    title: '경계의 지형',
-    subtitle: 'Topography of Boundaries',
-    venue: '아트스페이스 루',
-    city: '서울',
-    year: '2024',
-    type: 'solo',
-    gradient: 'linear-gradient(140deg, #D4C8B4 0%, #8A7B68 100%)',
-    images: [
-      {
-        type: '전시 전경',
-        // src: 'images/ex1/view1.jpg',
-        gradient: 'linear-gradient(140deg, #D4C8B4 0%, #8A7B68 100%)',
-        caption: '전시 전경, 아트스페이스 루, 서울, 2024',
-      },
-      {
-        type: '전시 전경',
-        // src: 'images/ex1/view2.jpg',
-        gradient: 'linear-gradient(160deg, #C8BAA4 0%, #786A58 100%)',
-        caption: '전시 전경, 아트스페이스 루, 서울, 2024',
-      },
-      {
-        type: '작품',
-        // src: 'images/ex1/work1.jpg',
-        gradient: 'linear-gradient(45deg, #B8A890 0%, #685848 100%)',
-        caption: '무제 I, 캔버스에 유채, 120 × 90 cm, 2024',
-      },
-      {
-        type: '작품',
-        // src: 'images/ex1/work2.jpg',
-        gradient: 'linear-gradient(90deg, #A89880 0%, #584838 100%)',
-        caption: '무제 II, 캔버스에 유채, 100 × 80 cm, 2024',
-      },
-      {
-        type: '작품',
-        // src: 'images/ex1/work3.jpg',
-        gradient: 'linear-gradient(120deg, #988878 0%, #483828 100%)',
-        caption: '무제 III, 혼합매체, 80 × 60 cm, 2024',
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: '공기의 무게',
-    subtitle: 'Weight of Air',
-    venue: '갤러리현대',
-    city: '서울',
-    year: '2022',
-    type: 'solo',
-    gradient: 'linear-gradient(140deg, #C4D4E4 0%, #4A6888 100%)',
-    images: [
-      {
-        type: '전시 전경',
-        gradient: 'linear-gradient(140deg, #C4D4E4 0%, #4A6888 100%)',
-        caption: '전시 전경, 갤러리현대, 서울, 2022',
-      },
-      {
-        type: '전시 전경',
-        gradient: 'linear-gradient(160deg, #B4C4D4 0%, #3A5878 100%)',
-        caption: '전시 전경, 갤러리현대, 서울, 2022',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(45deg, #A4B4C4 0%, #2A4868 100%)',
-        caption: '공기의 무게 I, 종이에 수채, 80 × 60 cm, 2022',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(110deg, #94A4B4 0%, #1A3858 100%)',
-        caption: '공기의 무게 II, 종이에 수채, 80 × 60 cm, 2022',
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: '잠시 머무는 곳',
-    subtitle: 'A Place to Stay',
-    venue: '스페이스K',
-    city: '서울',
-    year: '2020',
-    type: 'solo',
-    gradient: 'linear-gradient(140deg, #E4D4C4 0%, #886448 100%)',
-    images: [
-      {
-        type: '전시 전경',
-        gradient: 'linear-gradient(140deg, #E4D4C4 0%, #886448 100%)',
-        caption: '전시 전경, 스페이스K, 서울, 2020',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(55deg, #D4C4B4 0%, #785438 100%)',
-        caption: '머무는 시간, 캔버스에 아크릴, 200 × 150 cm, 2020',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(100deg, #C4B4A4 0%, #684428 100%)',
-        caption: '풍경의 기억, 종이에 혼합매체, 100 × 70 cm, 2020',
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: '한국 현대미술의 단면',
-    subtitle: 'Cross-section of Korean Contemporary Art',
-    venue: '국립현대미술관',
-    city: '서울',
-    year: '2024',
-    type: 'group',
-    gradient: 'linear-gradient(140deg, #D4E4D4 0%, #488448 100%)',
-    images: [
-      {
-        type: '전시 전경',
-        gradient: 'linear-gradient(140deg, #D4E4D4 0%, #488448 100%)',
-        caption: '전시 전경, 국립현대미술관, 서울, 2024',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(60deg, #C4D4C4 0%, #387438 100%)',
-        caption: '경계 위에서, 캔버스에 유채, 180 × 120 cm, 2023',
-      },
-    ],
-  },
-  {
-    id: 5,
-    title: '경계 너머',
-    subtitle: 'Beyond Boundaries',
-    venue: '아르코미술관',
-    city: '서울',
-    year: '2022',
-    type: 'group',
-    gradient: 'linear-gradient(140deg, #E4D4E4 0%, #784878 100%)',
-    images: [
-      {
-        type: '전시 전경',
-        gradient: 'linear-gradient(140deg, #E4D4E4 0%, #784878 100%)',
-        caption: '전시 전경, 아르코미술관, 서울, 2022',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(80deg, #D4C4D4 0%, #683868 100%)',
-        caption: '무경계 No.3, 캔버스에 유채, 150 × 100 cm, 2022',
-      },
-    ],
-  },
-  {
-    id: 6,
-    title: '물질의 기억',
-    subtitle: 'Memory of Matter',
-    venue: '갤러리 포',
-    city: '부산',
-    year: '2018',
-    type: 'solo',
-    gradient: 'linear-gradient(140deg, #E4E4D4 0%, #787848 100%)',
-    images: [
-      {
-        type: '전시 전경',
-        gradient: 'linear-gradient(140deg, #E4E4D4 0%, #787848 100%)',
-        caption: '전시 전경, 갤러리 포, 부산, 2018',
-      },
-      {
-        type: '전시 전경',
-        gradient: 'linear-gradient(160deg, #D4D4C4 0%, #686838 100%)',
-        caption: '전시 전경, 갤러리 포, 부산, 2018',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(45deg, #C4C4B4 0%, #585828 100%)',
-        caption: '기억의 층위 I, 혼합매체, 90 × 120 cm, 2018',
-      },
-      {
-        type: '작품',
-        gradient: 'linear-gradient(100deg, #B4B4A4 0%, #484818 100%)',
-        caption: '기억의 층위 II, 혼합매체, 90 × 120 cm, 2018',
-      },
-    ],
-  },
-]
+/* ===== ARTWORK MANAGER 연동 =====
+   artwork-manager/index.html 에서 작품을 추가하면
+   이 웹사이트의 Exhibition 섹션에 자동으로 반영됩니다.
+   ================================= */
+
+function loadExhibitions() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('shin_youngho_artworks')) || []
+    if (raw.length === 0) return []
+
+    return raw.map((art, i) => {
+      // 작품마다 고유한 톤의 플레이스홀더 그라데이션 생성
+      const hue = (i * 53 + 200) % 360
+      const grad = `linear-gradient(140deg, hsl(${hue},14%,76%) 0%, hsl(${hue},14%,50%) 100%)`
+
+      // 모달 캡션: "제목, 재료, 크기, 연도" 형식
+      const captionParts = [art.medium, art.size, art.year].filter(Boolean)
+      const caption = captionParts.length ? `${art.title}, ${captionParts.join(', ')}` : art.title
+
+      return {
+        id: art.id,
+        title: art.title,
+        // venue/city → 재료/크기로 활용 (모달 서브라인에 표시)
+        venue: art.medium || '',
+        city: art.size   || '',
+        year: art.year   || '',
+        series: art.series || '',
+        // series 있으면 'solo', 없으면 'group' — 필터 버튼과 연동
+        type: art.series ? 'solo' : 'group',
+        gradient: grad,
+        images: [{
+          type: '작품',
+          src: art.imageData || null,
+          gradient: grad,
+          caption: art.caption || caption,
+        }],
+      }
+    })
+  } catch (e) {
+    return []
+  }
+}
+
+const exhibitions = loadExhibitions()
 
 /* ============================================================
    STATE
